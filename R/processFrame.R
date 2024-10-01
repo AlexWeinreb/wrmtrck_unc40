@@ -61,6 +61,10 @@ processFrame = function(f, plot=FALSE) {
   
   # get the centerline as the longest shortest path in the tree, smooth and interpolate it.
   centerLine = nodes[getTreeDiameterPath(graphRaw), ]
+  if(nrow(centerLine) < centerLineFilterLength/imgDs - 1){
+    stop("Problem with frame: ", f)
+  }
+  
   centerLineFiltered = runmean2(centerLine, k=centerLineFilterLength/imgDs, endrule='keep')
   centerLineResampled = woRmTools::interpArc(centerLineFiltered, nOut=nBbAngles+1)
   colnames(centerLineResampled) = c("y", "x")
