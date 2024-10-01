@@ -38,6 +38,9 @@ processFrame = function(f, plot=FALSE) {
   thinned = woRmTools::thinImage(labeled, max(dim(labeled)));
   cat("| thinned. ")
   
+  if(all(thinned == 0)){
+    stop("Problem with frame ", f)
+  }
   graphRaw = getGraphFromThinnedImage(thinned) 
   nodes = which(thinned > 0, arr.ind=TRUE) # 3ms
   #returnVal$nodes = nodes
